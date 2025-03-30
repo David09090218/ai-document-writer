@@ -1,7 +1,5 @@
 'use client'
-
-import { useState, useEffect } from 'react'
-import { DocumentTextIcon } from '@heroicons/react/24/outline'
+import { useState, useEffect, Suspense } from 'react'
 import { useSearchParams } from 'next/navigation'
 
 const documentTypes = [
@@ -12,6 +10,14 @@ const documentTypes = [
 ]
 
 export default function WritePage() {
+  return (
+    <Suspense fallback={<div>Loading...</div>}>
+      <WritePageContent />
+    </Suspense>
+  )
+}
+
+function WritePageContent() {
   const searchParams = useSearchParams()
   const [selectedType, setSelectedType] = useState('')
   const [content, setContent] = useState('')
@@ -75,7 +81,6 @@ export default function WritePage() {
                 }`}
                 onClick={() => setSelectedType(type.id)}
               >
-                <DocumentTextIcon className="h-8 w-8 text-blue-500" />
                 <h3 className="mt-4 text-lg font-medium text-gray-900">{type.name}</h3>
                 <p className="mt-2 text-sm text-gray-500">{type.description}</p>
               </div>
